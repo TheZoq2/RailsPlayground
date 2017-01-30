@@ -1,0 +1,17 @@
+<h1>
+    counters
+</h1>
+
+<p>
+    You have <%= @amount %> counters
+</p>
+
+<li>
+    <% @counters.each do |counter| %>
+        <ul>
+            <%= counter.counter %>
+            <a href="increment/<%=counter.id%>">Increment</a>
+        </ul>
+    <% end %>
+</li>
+

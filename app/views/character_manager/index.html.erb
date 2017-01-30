@@ -1,0 +1,47 @@
+<h1>
+    Character selection
+</h1>
+
+<% if @has_character %>
+    <p>
+        Your name is <%= @character_name %>, 
+        you are level <%= @character_level %>
+        and have <%= @character_health %> health
+    </p>
+<% else %>
+    <p>
+        Create a new character
+
+        <%= form_for :character_controller, url: character_create_path(), method: "get" do |f| %>
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+
+            <p>
+                <%= f.submit %>
+            </p>
+        <% end %>
+    </p>
+<% end %>
+
+<h3>Other characters</h3>
+
+<table>
+    <tr>
+        <td>Name</td>
+        <td>Level</td>
+        <td>Health</td>
+    </tr>
+    <% @character_list.each do |character| %>
+        <tr>
+            <td>
+                <%= character.name %>
+            </td>
+            <td>
+                <%= character.level %>
+            </td>
+            <td>
+                <%= character.health %>
+            </td>
+        </tr>
+    <% end %>
+</table>
