@@ -10,7 +10,15 @@ Rails.application.routes.draw do
   get 'welcome/list' => 'welcome#list'
 
   get 'location' => 'location#index'
-  post 'location/create' => 'location#create'
+  post 'location/create' => 'location#create', as: :locations
+  get 'location/:id/edit(.:format)', :to => 'location#edit', as: :location_edit
+  patch 'location.:id', :to => 'location#update'
+  delete 'location.:id', :to => 'location#destroy', as: :location_delete
+
+  get 'location/edit_path/:id', :to => 'location#edit_paths', as: :path_edit
+
+  #resource :location
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

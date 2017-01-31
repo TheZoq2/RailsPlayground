@@ -1,0 +1,12 @@
+<h1>
+    Editing paths for <%= @location.name %>
+</h1>
+
+<ul>
+    <% @locations.each do |location| %>
+        <li>
+            <%= check_box_tag location.id, 1, true %>
+            <%= label_tag location.name %>
+        </li>
+    <% end %>
+</ul>

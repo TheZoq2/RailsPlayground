@@ -27,3 +27,18 @@ And reading the "Prefix line"
 #Routing to a controller
 Controllers have uppercase names along the lines of `<name>Controller` while
 the routing should have `<name>` in snakecase
+
+
+#Naming routes
+Use RESTFUL routes if possible. If not, do this
+```
+  get '<path>', :to => '<location>', as: :<name>
+```
+
+#Delete
+Delete requires buttons, not links
+
+```
+<%= button_to "delete", location, :method => :delete %>
+```
+
