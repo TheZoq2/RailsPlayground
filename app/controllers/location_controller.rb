@@ -38,7 +38,13 @@ class LocationController < ApplicationController
         @locations = Location.all
 
         @locations = @locations.select{|location| location != @location}
-        @locations = @locations.map(|location|)
+        @locations = @locations.map{|location| 
+                path_exists = exists_path_between(@location, location)
+                struct = Struct.new(:other_location, :has_path)
+                struct.other_location = @location
+                struct.has_path = path_exists
+                struct
+            }
     end
 
     private
@@ -48,8 +54,8 @@ class LocationController < ApplicationController
 
         #Check if a path exists between location1 and location2
         def exists_path_between(location_id1, location_id2)
-            if User.find by(location1: location_id1, location2: location_id2) and
-                User.find by(location2: location_id1, location1: location_id2)
+            if Path.find_by(start: location_id1, end: location_id2) and
+                Path.find_by(end: location_id1, start: location_id2)
                 return true
             end
             return false
