@@ -15,7 +15,8 @@ Rails.application.routes.draw do
   patch 'location.:id', :to => 'location#update'
   delete 'location.:id', :to => 'location#destroy', as: :location_delete
 
-  get 'location/edit_path/:id', :to => 'location#edit_paths', as: :path_edit
+  get 'location/edit_paths/:id', :to => 'location#edit_paths', as: :path_edit
+  patch 'locations/update_paths/:id', :to => 'location#update_paths', as: :update_paths
 
   #resource :location
 

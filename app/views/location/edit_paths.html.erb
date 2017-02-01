@@ -2,11 +2,15 @@
     Editing paths for <%= @location.name %>
 </h1>
 
-<ul>
-    <% @locations.each do |location| %>
-        <li>
-            <%= check_box_tag location.id, 1, true %>
-            <%= label_tag location.name %>
-        </li>
-    <% end %>
-</ul>
+<%= form_for @location, url: update_paths_path(@location) do |f| %>
+    <ul>
+        <% @locations.each do |location_hash| %>
+            <% location = location_hash[:location] %>
+            <li>
+                <%= f.check_box location.id, {checked: location_hash[:has_path]} %>
+                <%= f.label location.name %>
+            </li>
+        <% end %>
+    </ul>
+    <%= f.submit() %>
+<% end %>

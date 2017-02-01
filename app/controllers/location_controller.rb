@@ -40,11 +40,16 @@ class LocationController < ApplicationController
         @locations = @locations.select{|location| location != @location}
         @locations = @locations.map{|location| 
                 path_exists = exists_path_between(@location, location)
-                struct = Struct.new(:other_location, :has_path)
-                struct.other_location = @location
-                struct.has_path = path_exists
-                struct
+
+                {
+                    location: location,
+                    has_path: path_exists
+                }
             }
+    end
+
+    def update_paths
+        render params
     end
 
     private
