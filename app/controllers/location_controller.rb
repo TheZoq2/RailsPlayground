@@ -39,7 +39,7 @@ class LocationController < ApplicationController
 
         @locations = @locations.select{|location| location != @location}
         @locations = @locations.map{|location| 
-                path_exists = exists_path_between(@location, location)
+                path_exists = @location.has_path_to(location)
 
                 {
                     location: location,
@@ -49,20 +49,26 @@ class LocationController < ApplicationController
     end
 
     def update_paths
-        render params
+        location = Location.find([params[:id]]).first
+
+        other_locations = params.require(:location)
+
+        location_list = {}
+
+        other_locations.each do |other_location, connected|
+            other_id = other_location.to_i
+            other = Location.find(other_id)
+
+            location_list[other] = connected == "1"
+        end
+
+        location.set_paths(location_list)
+
+        redirect_to action: "index"
     end
 
     private
         def location_parameters
             params.require(:location).permit(:name, :description)
-        end
-
-        #Check if a path exists between location1 and location2
-        def exists_path_between(location_id1, location_id2)
-            if Path.find_by(start: location_id1, end: location_id2) and
-                Path.find_by(end: location_id1, start: location_id2)
-                return true
-            end
-            return false
         end
 end

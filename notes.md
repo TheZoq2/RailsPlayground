@@ -42,3 +42,24 @@ Delete requires buttons, not links
 <%= button_to "delete", location, :method => :delete %>
 ```
 
+
+#Migrations for associations
+
+To generate migrations for associations:
+
+```
+rails g migration <name> <name in plural>:<relationship>
+rake db:migrate
+```
+
+For `belongs_to`, `relationship` can be `references or belongs_t`
+
+#Removing column through migration
+
+```
+class RemoveLocationBelongsTo < ActiveRecord::Migration
+  def change
+      remove_column :locations :location_id
+  end
+end
+```

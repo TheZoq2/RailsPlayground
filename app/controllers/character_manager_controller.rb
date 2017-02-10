@@ -5,7 +5,7 @@ class CharacterManagerController < ApplicationController
         @has_character = false
         if old_character
             @has_character = true
-            
+
             current_character_id = Character.find(session[:character_id])
             current_character = Character.find(current_character_id)
             @character_name = current_character.name

@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  start: 1
-  end: 1
+  first_location_id: 
+  second_location_id: 
 
 two:
-  start: 1
-  end: 1
+  first_location_id: 
+  second_location_id: 
