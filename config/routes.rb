@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'character_manager#index'
 
   get 'character/create' => 'character_manager#create'
+  get 'character/deselect' => 'character_manager#deselect', as: :deselect_character
 
   get 'welcome/increment/:id' => 'welcome#increment'
 
@@ -17,6 +18,9 @@ Rails.application.routes.draw do
 
   get 'location/edit_paths/:id', :to => 'location#edit_paths', as: :path_edit
   patch 'locations/update_paths/:id', :to => 'location#update_paths', as: :update_paths
+
+  get 'game', :to => "game#index"
+  get 'game/travel_to/:id', :to => "game#travel_to", as: :travel_to
 
   #resource :location
 

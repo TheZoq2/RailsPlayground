@@ -1,5 +1,6 @@
 class Character < ActiveRecord::Base
-    has_one :location
+    belongs_to :location
+
     validates :name, presence: true
 
 

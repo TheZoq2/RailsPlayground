@@ -11,15 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170210094441) do
+ActiveRecord::Schema.define(version: 20170210111010) do
 
   create_table "characters", force: :cascade do |t|
     t.string   "name"
     t.integer  "level"
     t.integer  "health"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "location_id"
   end
+
+  add_index "characters", ["location_id"], name: "index_characters_on_location_id"
 
   create_table "counters", force: :cascade do |t|
     t.integer  "counter"

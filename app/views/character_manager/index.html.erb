@@ -8,6 +8,12 @@
         you are level <%= @character_level %>
         and have <%= @character_health %> health
     </p>
+    <p>
+        Your current location is <%= @location_name %>
+    </p>
+
+    <%= button_to "Create a new character", deselect_character_path, :method => :get %>
+    <%= button_to "Play game", game_path, :method => :get %>
 <% else %>
     <p>
         Create a new character
@@ -21,6 +27,7 @@
             </p>
         <% end %>
     </p>
+
 <% end %>
 
 <h3>Other characters</h3>

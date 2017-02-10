@@ -8,10 +8,10 @@ class LocationTest < ActiveSupport::TestCase
 
       location1.add_path(location2)
 
-      assert_equal(1, location1.locations.count)
-      assert_equal(location1.locations.first, location2)
-      assert_equal(1, location2.locations.count)
-      assert_equal(location2.locations.first, location1)
+      assert_equal(1, location1.neighbours.count)
+      assert_equal(location1.neighbours.first, location2)
+      assert_equal(1, location2.neighbours.count)
+      assert_equal(location2.neighbours.first, location1)
 
       #Making sure the has_path works
       assert(location1.has_path_to(location2))
