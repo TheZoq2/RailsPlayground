@@ -6,6 +6,7 @@ class Character < ActiveRecord::Base
 
     def set_location(location)
       self.location = location
+      self.save()
     end
 
     def get_current_location()
