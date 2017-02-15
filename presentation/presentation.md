@@ -4,6 +4,75 @@ theme: cleaver-light
 
 ---
 ##Model view controler
+![mvc](img/mvc.png)
+
+
+---
+
+##Views
+Hanterar rendering för klienten
+```html
+<h1>
+    <%= @location.name %>
+</h1>
+
+<p>
+    <%= @location.description %>
+</p>
+
+
+<h3>
+    Leave <%= @location.name %>
+</h3>
+
+<table>
+    <% @location.neighbours.each do |location| %>
+        <tr>
+            <td>
+                <%= link_to location.name, travel_to_path(location)%>
+            </td>
+        </tr>
+    <% end %>
+</table>
+```
+
+---
+##Controllers
+Hanterar input från klienten
+
+```ruby
+class GameController < ApplicationController
+    def index
+        character = Character.find(session[:character_id])
+
+        @location = character.location
+    end
+
+    def travel_to
+        character = Character.find(session[:character_id])
+
+        target_location = Location.find(params[:id])
+
+        ...
+
+        redirect_to action: "index"
+    end
+end
+```
+
+För rendering krävs `views/<name>.html.erb` eller redirect
+
+---
+
+##Generering
+
+```ruby
+#Generera en controller
+rails g controller <name>
+```
+
+Views måste dock genereras manuellt
+
 
 ---
 
@@ -51,6 +120,24 @@ Post skickas gömt men struktureras på samma sätt
 
 Rails har även andra methods `patch, delete`
 
+---
+
+##Models
+Sparar data
+
+Kan genereras med 
+```ruby
+rails g model <name> <field>:<datatype> ..
+
+#Generera modell för kontrakt
+rails g model contract name:string value:integer ...
+```
+
+Data komms åt med
+```ruby
+#Hitta namnet på kontrakt med ett specifikt id
+Contract.find(id).name
+```
 
 ---
 ##Relationsdatabaser
@@ -142,3 +229,19 @@ rake db:migrate
 
 ---
 
+##Session & cookies
+Databser sparar länge, ibland vill man spara data halvtemporärt.
+
+Session sparas per webbläsare per instans
+
+Cookies sparas per webbläsare tills cookies ränsas
+
+Man kan komma åt dem med 
+```ruby
+yolo = session[:namn]
+session[:namn] = yolo
+```
+
+Används typiskt för att till exempel spara att en användare är inloggad
+
+---

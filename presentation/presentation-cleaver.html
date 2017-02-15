@@ -316,7 +316,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-tag,
 .hljs-name,
 .hljs-attribute {
-  color: #000080;
+  color: #F883FF;
   font-weight: normal;
 }
 
@@ -327,7 +327,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 .hljs-symbol,
 .hljs-bullet {
-  color: #E4E369;
+  color: #990073;
 }
 
 .hljs-built_in,
@@ -368,9 +368,67 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
   <div class="slide -" id="slide-1">
     <section class="slide-content"><h2 id="model-view-controler">Model view controler</h2>
+<p><img src="img/mvc.png" alt="mvc"></p>
 </section>
   </div>
   <div class="slide hidden -" id="slide-2">
+    <section class="slide-content"><h2 id="views">Views</h2>
+<p>Hanterar rendering för klienten</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">%=</span> @<span class="hljs-attr">location.name</span> %&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">%=</span> @<span class="hljs-attr">location.description</span> %&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+
+<span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>
+    Leave <span class="hljs-tag">&lt;<span class="hljs-name">%=</span> @<span class="hljs-attr">location.name</span> %&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">table</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">%</span> @<span class="hljs-attr">location.neighbours.each</span> <span class="hljs-attr">do</span> |<span class="hljs-attr">location</span>| %&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">%=</span> <span class="hljs-attr">link_to</span> <span class="hljs-attr">location.name</span>, <span class="hljs-attr">travel_to_path</span>(<span class="hljs-attr">location</span>)%&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">%</span> <span class="hljs-attr">end</span> %&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span></code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-3">
+    <section class="slide-content"><h2 id="controllers">Controllers</h2>
+<p>Hanterar input från klienten</p>
+<pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GameController</span> &lt; ApplicationController</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span></span>
+        character = Character.find(session[<span class="hljs-symbol">:character_id</span>])
+
+        @location = character.location
+    <span class="hljs-keyword">end</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">travel_to</span></span>
+        character = Character.find(session[<span class="hljs-symbol">:character_id</span>])
+
+        target_location = Location.find(params[<span class="hljs-symbol">:id</span>])
+
+        ...
+
+        redirect_to <span class="hljs-symbol">action:</span> <span class="hljs-string">"index"</span>
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span></code></pre>
+<p>För rendering krävs <code>views/&lt;name&gt;.html.erb</code> eller redirect</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-4">
+    <section class="slide-content"><h2 id="generering">Generering</h2>
+<pre><code class="lang-ruby"><span class="hljs-comment">#Generera en controller</span>
+rails g controller &lt;name&gt;</code></pre>
+<p>Views måste dock genereras manuellt</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-5">
     <section class="slide-content"><h2 id="routing">Routing</h2>
 <p>Bestämmer URLer för views/controllers</p>
 <pre><code>app/routes.rb</code></pre>
@@ -389,7 +447,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   get <span class="hljs-string">'welcome/increment/:id'</span> =&gt; <span class="hljs-string">'welcome#increment'</span></code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-3">
+  <div class="slide hidden -" id="slide-6">
     <section class="slide-content"><h2 id="methods">Methods</h2>
 <p>Get är data som ses i URL fältet</p>
 <pre><code class="lang-ruby">yoloswag.org/din_mamma?swag=<span class="hljs-number">69</span>&amp;level=<span class="hljs-number">9001</span>
@@ -401,7 +459,20 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 <p>Rails har även andra methods <code>patch, delete</code></p>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-4">
+  <div class="slide hidden -" id="slide-7">
+    <section class="slide-content"><h2 id="models">Models</h2>
+<p>Sparar data</p>
+<p>Kan genereras med </p>
+<pre><code class="lang-ruby">rails g model &lt;name&gt; &lt;field&gt;<span class="hljs-symbol">:&lt;datatype&gt;</span> ..
+
+<span class="hljs-comment">#Generera modell för kontrakt</span>
+rails g model contract <span class="hljs-symbol">name:</span>string <span class="hljs-symbol">value:</span>integer ...</code></pre>
+<p>Data komms åt med</p>
+<pre><code class="lang-ruby"><span class="hljs-comment">#Hitta namnet på kontrakt med ett specifikt id</span>
+Contract.find(id).name</code></pre>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-8">
     <section class="slide-content"><h2 id="relationsdatabaser">Relationsdatabaser</h2>
 <p>Databaser är 2d struktuer, typ excel eller structar där
 kolumner är &#39;variabler&#39; och rader är instanser av &#39;data&#39;</p>
@@ -412,7 +483,7 @@ kolumner är &#39;variabler&#39; och rader är instanser av &#39;data&#39;</p>
 <p>Fälten kan bara innehålla enkla datatyper -&gt; inga listor</p>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-5">
+  <div class="slide hidden -" id="slide-9">
     <section class="slide-content"><h2 id="relationsdatabaser">Relationsdatabaser</h2>
 <p>Vi vill att alla users ska ha en lista av kontrakt</p>
 <pre><code>| id | Company name | created | permission |
@@ -427,7 +498,7 @@ kolumner är &#39;variabler&#39; och rader är instanser av &#39;data&#39;</p>
 <p>Relationen ligger alltså inte i usern, utan i objektet som usern har.</p>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-6">
+  <div class="slide hidden -" id="slide-10">
     <section class="slide-content"><h2 id="i-rails">I rails</h2>
 <pre><code class="lang-ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Location</span> &lt; ActiveRecord::Base</span>
     has_many <span class="hljs-symbol">:paths</span>
@@ -440,7 +511,7 @@ kolumner är &#39;variabler&#39; och rader är instanser av &#39;data&#39;</p>
 ...</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-7">
+  <div class="slide hidden -" id="slide-11">
     <section class="slide-content"><h2 id="-ndring-av-databasen">Ändring av databasen</h2>
 <pre><code class="lang-bash">rails g migration &lt;namn&gt; user_id:<span class="hljs-built_in">integer</span></code></pre>
 <p>Genererar filen</p>
@@ -457,7 +528,18 @@ kolumner är &#39;variabler&#39; och rader är instanser av &#39;data&#39;</p>
 <pre><code>rake db:migrate</code></pre>
 </section>
   </div>
-  <div class="slide hidden -" id="slide-8">
+  <div class="slide hidden -" id="slide-12">
+    <section class="slide-content"><h2 id="session-cookies">Session &amp; cookies</h2>
+<p>Databser sparar länge, ibland vill man spara data halvtemporärt.</p>
+<p>Session sparas per webbläsare per instans</p>
+<p>Cookies sparas per webbläsare tills cookies ränsas</p>
+<p>Man kan komma åt dem med </p>
+<pre><code class="lang-ruby">yolo = session[<span class="hljs-symbol">:namn</span>]
+session[<span class="hljs-symbol">:namn</span>] = yolo</code></pre>
+<p>Används typiskt för att till exempel spara att en användare är inloggad</p>
+</section>
+  </div>
+  <div class="slide hidden -" id="slide-13">
     <section class="slide-content"></section>
   </div>
 
