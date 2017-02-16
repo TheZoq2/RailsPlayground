@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   get 'game', :to => "game#index"
   get 'game/travel_to/:id', :to => "game#travel_to", as: :travel_to
+  get 'game/combat', :to => "game#combat"
+  get 'game/combat/new_card', :to => "game#new_card"
 
   #resource :location
 
