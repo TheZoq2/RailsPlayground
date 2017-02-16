@@ -1,6 +1,6 @@
 class DeletePaths < ActiveRecord::Migration
   def up
-    drop_table :paths
+    #drop_table :paths
   end
 
   def down
