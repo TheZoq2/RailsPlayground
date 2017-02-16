@@ -2,16 +2,23 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-add_card = (name) ->
+#Creates a new card and appends it to the card container
+add_card = (data) ->
     content = "<div class='card'>"
     content += "<p>"
-    content += name
+    content += data.name
+    content += "</p>"
+    content += "<p>"
+    content += data.description
     content += "</p>"
     content += "</div>"
-    $("#card_container").append -> content
+    card_object = $("#card_container").append -> content
 
-request_cards_from_server = () ->
-    $.ajax 'new_card',
+    card_object.on "click", -> use_card(data.id)
+
+#Requests a new card from the server and adds the card to the game
+request_card_from_server = () ->
+    $.ajax 'combat/new_card',
         type: 'GET'
         dataType: 'json'
         error: (jqXHR, text_status, errorThrown) ->
@@ -19,7 +26,16 @@ request_cards_from_server = () ->
         success: (data, text_status, jqXHR) ->
             add_card(data)
 
+use_card = (id) ->
+    $.ajax 'combat/use_card/' + id
+        type: 'POST'
+        dataType: 'json'
+        error: (jqXHR, text_status, errorThrown) ->
+            $('body').append "AJAX Error: #{errorThrown}"
+        success: (data, text_status, jqXHR) ->
+            alert("reply")
+
 @combat_handler = () ->
-    add_card("A card")
-    request_cards_from_server()
+    request_card_from_server()
+    request_card_from_server()
 

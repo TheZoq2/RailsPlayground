@@ -25,8 +25,15 @@ class GameController < ApplicationController
   end
 
   def new_card
+    card = {
+      id: 5,
+      name: "Great card",
+      description: "Does really nice things"
+    }
+
     respond_to do |format|
-      format.json { render json: "yolo", status: :created, location: "yolo" }
+      format.html { render json: card, status: :created, location: "yolo" }
+      format.json { render json: card, status: :created, location: "yolo" }
     end
   end
 end
