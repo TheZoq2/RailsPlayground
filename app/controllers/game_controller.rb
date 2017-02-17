@@ -20,20 +20,4 @@ class GameController < ApplicationController
     redirect_to action: "combat"
   end
 
-  def combat
-    @combat = "Insert enemy type here"
-  end
-
-  def new_card
-    card = {
-      id: 5,
-      name: "Great card",
-      description: "Does really nice things"
-    }
-
-    respond_to do |format|
-      format.html { render json: card, status: :created, location: "yolo" }
-      format.json { render json: card, status: :created, location: "yolo" }
-    end
-  end
 end

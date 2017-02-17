@@ -1,0 +1,21 @@
+h1
+  = @combat
+
+p 
+  span Health: 
+  span id="player_health" 100
+
+p
+  span Level: 
+  span id="player_level" 0
+
+div id="card_container"
+
+javascript:
+  urls = {
+    new_card_path: "#{new_card_path()}",
+  }
+
+coffee:
+  combat_handler(urls)
+

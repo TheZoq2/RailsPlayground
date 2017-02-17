@@ -1,0 +1,2 @@
+module CombatHelper
+end

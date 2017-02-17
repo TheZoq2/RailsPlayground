@@ -12,13 +12,17 @@ add_card = (data) ->
     content += data.description
     content += "</p>"
     content += "</div>"
+
+    content = $(content).on "click", -> 
+        use_card(data.url)
+        this.remove
+
     card_object = $("#card_container").append -> content
 
-    card_object.on "click", -> use_card(data.id)
 
 #Requests a new card from the server and adds the card to the game
-request_card_from_server = () ->
-    $.ajax 'combat/new_card',
+request_card_from_server = (url) ->
+    $.ajax url,
         type: 'GET'
         dataType: 'json'
         error: (jqXHR, text_status, errorThrown) ->
@@ -26,16 +30,20 @@ request_card_from_server = () ->
         success: (data, text_status, jqXHR) ->
             add_card(data)
 
-use_card = (id) ->
-    $.ajax 'combat/use_card/' + id
-        type: 'POST'
+update_info = (status) ->
+    $("#player_health").text(status.player.health)
+
+use_card = (url) ->
+    $.ajax url,
+        type: 'GET'
         dataType: 'json'
         error: (jqXHR, text_status, errorThrown) ->
             $('body').append "AJAX Error: #{errorThrown}"
         success: (data, text_status, jqXHR) ->
-            alert("reply")
+            update_info(data)
 
-@combat_handler = () ->
-    request_card_from_server()
-    request_card_from_server()
+@combat_handler = (urls) ->
+    request_card_from_server(urls.new_card_path)
+    #request_card_from_server(urls.new_card_path)
+    request_card_from_server(urls.new_card_path)
 

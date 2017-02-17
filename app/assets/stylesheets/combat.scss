@@ -1,0 +1,50 @@
+
+$background-color: #1c1c1c;
+$font-color: #fff;
+
+$card-height: 250px;
+$card-width: 200px;
+
+body
+{
+    background-color: $background-color;
+    color: $font-color;
+}
+
+.card
+{
+    background-color: #6d82a5;
+    width: $card-width;
+    height: $card-height;
+    float: left;
+    border-radius: 10px;
+    margin-top: 25px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+@keyframes card_rise{
+    from{
+        margin-top: 25px;
+    }
+    to{
+        margin-top: 0px;
+    }
+}
+
+.card:hover
+{
+    animation: card_rise 0.5s 1;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(0.15, 0.55, 0.78, 1.5);
+}
+
+@keyframes card_add
+{
+    from{
+        transform: rotateY(90deg);
+    }
+    to{
+        transform: rotateY(0deg);
+    }
+}
