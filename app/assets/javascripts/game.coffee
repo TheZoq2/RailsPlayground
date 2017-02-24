@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 #Creates a new card and appends it to the card container
-add_card = (data) ->
+add_card = (data, onClick) ->
     content = "<div class='card'>"
     content += "<p>"
     content += data.name
@@ -13,9 +13,11 @@ add_card = (data) ->
     content += "</p>"
     content += "</div>"
 
-    content = $(content).on "click", -> 
+    content = $(content).on "click", ->
         use_card(data.url)
-        this.remove
+        this.classList.add('card_remove')
+        this.remove()
+        onClick()
 
     card_object = $("#card_container").append -> content
 
@@ -28,7 +30,17 @@ request_card_from_server = (url) ->
         error: (jqXHR, text_status, errorThrown) ->
             $('body').append "AJAX Error: #{errorThrown}"
         success: (data, text_status, jqXHR) ->
-            add_card(data)
+            add_card(data, () -> request_card_from_server(url))
+
+request_status_update = (url) ->
+    $.ajax url,
+        type: 'POST'
+        dataType: 'json'
+        error: (jqXHR, text_status, errorThrown) ->
+            $('body').append "AJAX Error: #{errorThrown}"
+        success: (data, text_status, jqXHR) ->
+            update_info(data)
+
 
 update_info = (status) ->
     $("#player_health").text(status.player.health)
@@ -46,4 +58,6 @@ use_card = (url) ->
     request_card_from_server(urls.new_card_path)
     #request_card_from_server(urls.new_card_path)
     request_card_from_server(urls.new_card_path)
+    request_card_from_server(urls.new_card_path)
+    request_status_update(urls.status_update_path)
 

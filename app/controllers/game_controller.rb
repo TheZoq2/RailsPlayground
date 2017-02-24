@@ -17,7 +17,7 @@ class GameController < ApplicationController
 
     character.set_location(target_location)
 
-    redirect_to action: "combat"
+    redirect_to controller: "combat", action: "index"
   end
 
 end

@@ -1,16 +1,21 @@
 class CombatController < ApplicationController
+  before_action :get_player_character
+
   def index
     @combat = "Insert enemy type here"
   end
 
   def new_card
     id = 5;
-    card = {
-      id: id,
-      name: "Great card",
-      description: "Does really nice things",
-      url: use_card_url(id)
-    }
+    card_object = CombatHelper::CardList.new.get_random_card
+    #card = {
+    #  id: id,
+    #  name: "Great card",
+    #  description: "Does really nice things",
+    #  url: use_card_url(id)
+    #}
+    
+    card = card_object.attribues
 
     respond_to do |format|
       format.html { render json: card, status: :created, location: "yolo" }
@@ -21,24 +26,27 @@ class CombatController < ApplicationController
   def use_card
     #Do something
 
-    player = Character.find(session[:character_id])
-    player.health -= 1
+    @player.health -= 1
 
-    player.save
-
-    puts "Player health", player.health
+    @player.save
 
     send_status()
   end
 
-  private
-    def send_status
-      player = Character.find(session[:character_id])
+  def status
+    send_status
+  end
 
+  private
+    def get_player_character
+      @player = Character.find(session[:character_id])
+    end
+
+    def send_status
       status = {
         player: {
-          health: player.health,
-          level: player.level
+          health: @player.health,
+          level: @player.level
         }
       }
 

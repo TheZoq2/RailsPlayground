@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   get 'game/combat', :to => "combat#index"
   get 'game/combat/new_card', :to => "combat#new_card", as: :new_card
   get 'game/combat/use_card/:id', :to => "combat#use_card", as: :use_card
-  post 'game/combat/combat_status', :to => "combat#get_status"
+  post 'game/combat/combat_status', :to => "combat#status", as: :combat_status
 
   #resource :location
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170210111010) do
+ActiveRecord::Schema.define(version: 20170224102839) do
 
   create_table "characters", force: :cascade do |t|
     t.string   "name"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20170210111010) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "location_id"
+    t.string   "type"
   end
 
   add_index "characters", ["location_id"], name: "index_characters_on_location_id"
