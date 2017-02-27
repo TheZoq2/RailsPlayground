@@ -7,15 +7,11 @@ class CombatController < ApplicationController
 
   def new_card
     id = 5;
-    card_object = CombatHelper::CardList.new.get_random_card
-    #card = {
-    #  id: id,
-    #  name: "Great card",
-    #  description: "Does really nice things",
-    #  url: use_card_url(id)
-    #}
-    
-    card = card_object.attribues
+    card = CombatHelper::CardList.new.get_random_card
+    card = card.get_hash
+    card[:url] = use_card_url(id)
+
+    puts "Card: " + card.to_s
 
     respond_to do |format|
       format.html { render json: card, status: :created, location: "yolo" }

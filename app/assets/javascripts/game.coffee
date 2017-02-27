@@ -24,6 +24,7 @@ add_card = (data, onClick) ->
 
 #Requests a new card from the server and adds the card to the game
 request_card_from_server = (url) ->
+    console.log(url)
     $.ajax url,
         type: 'GET'
         dataType: 'json'

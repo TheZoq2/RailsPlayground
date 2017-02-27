@@ -4,6 +4,7 @@ class CombatHelperTest < ActionController::TestCase
   test "combat helper test" do
     list = CombatHelper::CardList.new
 
-    list.get_random_card
+    assert_not_nil list.get_card_by_id(0)
+    assert_not_nil list.get_random_card
   end
 end

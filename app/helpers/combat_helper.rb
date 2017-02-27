@@ -21,9 +21,11 @@ module CombatHelper
     end
 
     def get_hash
-      {
-        id: self.id
+      hash = {}
+      instance_variables.each {|var| 
+        hash[var.to_s.delete("@")] = instance_variable_get(var) 
       }
+      hash
     end
   end
 
@@ -75,11 +77,17 @@ module CombatHelper
     end
 
     def add_card(name, description, function)
-      @cards.insert(Card.new(@nextId, name, description, function))
+      @cards << Card.new(@nextId, name, description, function)
+
+      @nextId += 1
     end
 
     def get_random_card
       @cards.sample
+    end
+    
+    def get_card_by_id(id)
+      @cards.first
     end
 
   end
